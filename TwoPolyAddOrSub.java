@@ -16,17 +16,19 @@ public class TwoPolyAddOrSub{
 
 		int biggestExp = findBiggestExp(poly1, poly2);
 		int smallestExp = findSmallestExp(poly1, poly2);
-		System.out.println("The biggestExp is " + biggestExp);
-		System.out.println("The smallestExp is " + smallestExp);
-
+		
+		int count = 1;
 		for(int i = biggestExp; i >= smallestExp; i--){
-			System.out.println(i + "exp is" + polyAdd(poly1, poly2, i));
+			polyAddByStep(poly1, poly2, i, count);
+			count = count + 1;
 		}
 
+		count = 1;
 		for(int i = biggestExp; i >= smallestExp; i--){
-			System.out.println(i + "exp is" + polySub(poly1, poly2, i));
+			polySubByStep(poly1, poly2, i, count);
+			count = count + 1;
 		}
-
+			
 
 	}
 
@@ -105,4 +107,67 @@ public class TwoPolyAddOrSub{
 
 		return poly1Coef - poly2Coef;
 	}
+
+	static void polyAddByStep(int[] poly1, int[] poly2, int exp, int step){
+		int poly1Coef = 0;
+		int poly2Coef = 0;
+
+		int poly1CoefAddress = 0;
+		int poly2CoefAddress = 0;
+
+		System.out.println("step" + step + ": process the x^" + exp);
+
+		for(int i = 1; i < poly1.length; i = i + 2){
+			if (poly1[i] == exp){
+				poly1CoefAddress = i - 1;
+				poly1Coef = poly1[poly1CoefAddress];
+				System.out.println("    A: " + poly1Coef + "x^" + exp + "   (A[" + poly1CoefAddress + "]==" + poly1Coef + ",A[" + i  + "]==" + exp + ")");
+				break;
+			}
+		}
+
+		for(int i = 1; i < poly2.length; i = i + 2){
+			if (poly2[i] == exp){
+				poly2CoefAddress = i - 1;
+				poly2Coef = poly2[poly2CoefAddress];
+				System.out.println("    B: " + poly2Coef + "x^" + exp + "   (B[" + poly2CoefAddress + "]==" + poly2Coef + ",B[" + i  + "]==" + exp + ")");
+				break;
+			}
+		}
+
+		System.out.println("    A + B = (" + poly1Coef + " + " + poly2Coef + ")x^" + exp);
+		System.out.println("-----------------------------------------------------------");
+	}
+
+	static void polySubByStep(int[] poly1, int[] poly2, int exp, int step){
+		int poly1Coef = 0;
+		int poly2Coef = 0;
+
+		int poly1CoefAddress = 0;
+		int poly2CoefAddress = 0;
+
+		System.out.println("step" + step + ": process the x^" + exp);
+
+		for(int i = 1; i < poly1.length; i = i + 2){
+			if (poly1[i] == exp){
+				poly1CoefAddress = i - 1;
+				poly1Coef = poly1[poly1CoefAddress];
+				System.out.println("    A: " + poly1Coef + "x^" + exp + "   (A[" + poly1CoefAddress + "]==" + poly1Coef + ",A[" + i  + "]==" + exp + ")");
+				break;
+			}
+		}
+
+		for(int i = 1; i < poly2.length; i = i + 2){
+			if (poly2[i] == exp){
+				poly2CoefAddress = i - 1;
+				poly2Coef = poly2[poly2CoefAddress];
+				System.out.println("    B: " + poly2Coef + "x^" + exp + "   (B[" + poly2CoefAddress + "]==" + poly2Coef + ",B[" + i  + "]==" + exp + ")");
+				break;
+			}
+		}
+
+		System.out.println("    A - B = (" + poly1Coef + " - " + poly2Coef + ")x^" + exp);
+		System.out.println("-----------------------------------------------------------");
+	}
+
 }
