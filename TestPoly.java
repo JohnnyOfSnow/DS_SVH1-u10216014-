@@ -1,46 +1,40 @@
-public class TwoPolyAddOrSub1{
-	public static void main(String[] args) {
-		String[] tokens = "3,4,-2,3,7,1,9,0,2,-1,6,-2".split(",");
-		String[] tokens1 = "1,4,-3,3,-2,0,-3,-1,-4,-3".split(",");
+class TwoPolyAddOrSub2{
 
-		StringBuilder stringBuilder = new StringBuilder();
+	static String poly1;
+	static String poly2;
+	
 
-		StringBuilder stringBuilder3 = new StringBuilder();
-
-
-		int[] poly1 = new int[tokens.length];
-		for (int i = 0; i < poly1.length; i++){
-			poly1[i] = Integer.parseInt(tokens[i]);
-		}
-
-		int[] poly2 = new int[tokens1.length];
-		for (int i = 0; i < poly2.length; i++){
-			poly2[i] = Integer.parseInt(tokens1[i]);
-		}
-
-		int biggestExp = findBiggestExp(poly1, poly2);
-		int smallestExp = findSmallestExp(poly1, poly2);
-		
-		int count = 1;
-		for(int i = biggestExp; i >= smallestExp; i--){
-			stringBuilder.append(polyAddByStep(poly1, poly2, i, count));
-			String polyAdd = new String(stringBuilder); // Convert stringBuilder into String data type
-			System.out.print(polyAdd);
-			count = count + 1;
-		}
-
-		count = 1;
-		for(int i = biggestExp; i >= smallestExp; i--){
-			stringBuilder3.append(polySubByStep(poly1, poly2, i, count));
-			String polySub = new String(stringBuilder3); // Convert stringBuilder3 into String data type
-			System.out.print(polySub);	
-			count = count + 1;
-		}
-
-		
-			
+	TwoPolyAddOrSub2(){
 
 	}
+
+	TwoPolyAddOrSub2(String newpoly1, String newpoly2) {
+		this.poly1 = newpoly1;
+		this.poly2 = newpoly2;
+	}
+
+	public static int[] Poly1StringToInt() {
+		String[] tokens = poly1.split(",");
+
+		int[] poly1IntArray = new int[tokens.length];
+		for (int i = 0; i < poly1IntArray.length; i++){
+			poly1IntArray[i] = Integer.parseInt(tokens[i]);
+		}
+
+		return poly1IntArray;
+	}
+
+	public static int[] Poly2StringToInt() {
+		String[] tokens = poly2.split(",");
+
+		int[] poly1IntArray = new int[tokens.length];
+		for (int i = 0; i < poly1IntArray.length; i++){
+			poly1IntArray[i] = Integer.parseInt(tokens[i]);
+		}
+
+		return poly1IntArray;
+	}
+
 
 	static int findBiggestExp(int[] poly1, int[] poly2){
 		int biggestExp = 0;
@@ -187,4 +181,34 @@ public class TwoPolyAddOrSub1{
 		return stringBuilder2;
 	}
 
+}
+
+public class TestPoly{
+	public static void main(String[] args) {
+		TwoPolyAddOrSub2 poly = new TwoPolyAddOrSub2("1,4,2,3,3,2,1,0,4,-1","2,3,1,2,5,0,4,-1");
+		int[] poly1 = poly.Poly1StringToInt();
+		int[] poly2 = poly.Poly2StringToInt();
+
+		int biggestExp = poly.findBiggestExp(poly1, poly2);
+		int smallestExp = poly.findSmallestExp(poly1, poly2);
+
+		int count = 1;
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i = biggestExp; i >= smallestExp; i--){
+			stringBuilder.append(poly.polyAddByStep(poly1, poly2, i, count));
+			String polyAdd = new String(stringBuilder); // Convert stringBuilder into String data type
+			System.out.print(polyAdd);
+			count = count + 1;
+		}
+
+
+		count = 1;
+		StringBuilder stringBuilder3 = new StringBuilder();
+		for(int i = biggestExp; i >= smallestExp; i--){
+			stringBuilder3.append(poly.polySubByStep(poly1, poly2, i, count));
+			String polySub = new String(stringBuilder3); // Convert stringBuilder3 into String data type
+			System.out.print(polySub);	
+			count = count + 1;
+		}
+	}
 }
