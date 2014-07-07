@@ -2,6 +2,8 @@ class TwoPolyAddOrSub2{
 
 	static String poly1;
 	static String poly2;
+	static int biggestExp1;
+	static int smallestExp1;
 	
 
 	TwoPolyAddOrSub2(){
@@ -50,6 +52,7 @@ class TwoPolyAddOrSub2{
 				biggestExp = poly2[i];
 			}
 		}
+		setBiggestExp(biggestExp);
 		return biggestExp;
 	}
 
@@ -67,6 +70,9 @@ class TwoPolyAddOrSub2{
 				smallestExp = poly2[i];
 			}
 		}
+
+		setSmallestExp(smallestExp);
+
 		return smallestExp;
 	}
 
@@ -110,6 +116,14 @@ class TwoPolyAddOrSub2{
 		}
 
 		return poly1Coef - poly2Coef;
+	}
+
+	public static void setBiggestExp(int newBiggestExp){
+		biggestExp1 = newBiggestExp;
+	}
+
+	public static void setSmallestExp(int newSmallestExp){
+		smallestExp1 = newSmallestExp;
 	}
 
 	static StringBuilder polyAddByStep(int[] poly1, int[] poly2, int exp, int step){
