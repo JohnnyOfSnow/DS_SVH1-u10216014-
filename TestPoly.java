@@ -2,8 +2,7 @@ class TwoPolyAddOrSub2{
 
 	static String poly1;
 	static String poly2;
-	static int biggestExp1;
-	static int smallestExp1;
+	static int times;
 	
 
 	TwoPolyAddOrSub2(){
@@ -22,7 +21,7 @@ class TwoPolyAddOrSub2{
 		for (int i = 0; i < poly1IntArray.length; i++){
 			poly1IntArray[i] = Integer.parseInt(tokens[i]);
 		}
-
+		
 		return poly1IntArray;
 	}
 
@@ -34,6 +33,7 @@ class TwoPolyAddOrSub2{
 			poly1IntArray[i] = Integer.parseInt(tokens[i]);
 		}
 
+		
 		return poly1IntArray;
 	}
 
@@ -52,7 +52,7 @@ class TwoPolyAddOrSub2{
 				biggestExp = poly2[i];
 			}
 		}
-		setBiggestExp(biggestExp);
+		
 		return biggestExp;
 	}
 
@@ -71,7 +71,7 @@ class TwoPolyAddOrSub2{
 			}
 		}
 
-		setSmallestExp(smallestExp);
+		
 
 		return smallestExp;
 	}
@@ -118,12 +118,10 @@ class TwoPolyAddOrSub2{
 		return poly1Coef - poly2Coef;
 	}
 
-	public static void setBiggestExp(int newBiggestExp){
-		biggestExp1 = newBiggestExp;
-	}
+	
 
-	public static void setSmallestExp(int newSmallestExp){
-		smallestExp1 = newSmallestExp;
+	public static void setTimes(int newTimes){
+		times = newTimes;
 	}
 
 	static StringBuilder polyAddByStep(int[] poly1, int[] poly2, int exp, int step){
@@ -195,6 +193,8 @@ class TwoPolyAddOrSub2{
 		return stringBuilder2;
 	}
 
+
+
 }
 
 public class TestPoly{
@@ -206,23 +206,49 @@ public class TestPoly{
 		int biggestExp = poly.findBiggestExp(poly1, poly2);
 		int smallestExp = poly.findSmallestExp(poly1, poly2);
 
-		int count = 1;
-		StringBuilder stringBuilder = new StringBuilder();
-		for(int i = biggestExp; i >= smallestExp; i--){
-			stringBuilder.append(poly.polyAddByStep(poly1, poly2, i, count));
-			String polyAdd = new String(stringBuilder); // Convert stringBuilder into String data type
+		TestPoly myApp = new TestPoly(poly1, poly2, biggestExp, smallestExp);
+		
+	}
+
+	TestPoly(int [] poly1, int[] poly2, int biggestExp, int smallestExp){
+		Thread thread1 = new Thread(new printPolyByStep(poly1, poly2, biggestExp, smallestExp));
+		thread1.start();
+	}
+
+	/**
+	 *   Class printPolyByStep is used to handle the process step by step. 
+	 */
+	public class printPolyByStep implements Runnable{
+		private int[] poly1;
+		private int[] poly2;
+		private int biggestExp;
+		private int smallestExp;
+
+		// set the variable's value.
+		printPolyByStep(int [] newpoly1, int[] newpoly2, int newbiggestExp, int newsmallestExp){
+			poly1 = newpoly1;
+			poly2 = newpoly2;
+			biggestExp = newbiggestExp;
+			smallestExp = newsmallestExp;
+		}
+
+		public void run() {
+		  TwoPolyAddOrSub2 poly = new TwoPolyAddOrSub2(); // create a object poly in order to use the method polyAddByStep defined in class TwoPolyAddOrSub2.
+		  int exp = biggestExp;
+		  int times = biggestExp - smallestExp + 1;
+		  StringBuilder stringBuilder = new StringBuilder(); // a stringBuilder that we can connect the string(Because a String object is immutable.)
+
+          	  for( int i = 1 ; i <= times ; i++ ) {
+            		stringBuilder.append(poly.polyAddByStep(poly1,poly2,exp,i));
+            		exp = exp - 1; // Control the exp's value.
+            		String polyAdd = new String(stringBuilder); // Convert stringBuilder into String data type
 			System.out.print(polyAdd);
-			count = count + 1;
-		}
-
-
-		count = 1;
-		StringBuilder stringBuilder3 = new StringBuilder();
-		for(int i = biggestExp; i >= smallestExp; i--){
-			stringBuilder3.append(poly.polySubByStep(poly1, poly2, i, count));
-			String polySub = new String(stringBuilder3); // Convert stringBuilder3 into String data type
-			System.out.print(polySub);	
-			count = count + 1;
-		}
+            		try {
+              			Thread.currentThread().sleep(2000); // Pause two seconds (currentThread------> thread1)
+            		} catch(InterruptedException ie) {
+              			ie.printStackTrace(); //  prints the Exception and the call stack (stack trace) to Standard Error output. 
+            		}
+          	  } // for
+        	} // run
 	}
 }
