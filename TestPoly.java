@@ -8,11 +8,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EmptyBorder;
 
 class TwoPolyAddOrSub2{
-
 	static String poly1;
 	static String poly2;
 	static int times;
-	
 
 	TwoPolyAddOrSub2(){
 
@@ -42,11 +40,10 @@ class TwoPolyAddOrSub2{
 			poly1IntArray[i] = Integer.parseInt(tokens[i]);
 		}
 
-		
 		return poly1IntArray;
 	}
 
-
+	// The method can get the biggest exp between two Polynomial.
 	static int findBiggestExp(int[] poly1, int[] poly2){
 		int biggestExp = 0;
 
@@ -65,6 +62,7 @@ class TwoPolyAddOrSub2{
 		return biggestExp;
 	}
 
+	// The method can get the smallest exp between two Polynomial.
 	static int findSmallestExp(int[] poly1, int[] poly2){
 		int smallestExp = 0;
 
@@ -80,11 +78,11 @@ class TwoPolyAddOrSub2{
 			}
 		}
 
-		
-
 		return smallestExp;
 	}
 
+	// According to the argument, the method can connect the result(two exp's coefficient are added.) and the exp
+	// Returning a string to caller.
 	static StringBuilder polyAdd(int[] poly1, int[] poly2, int exp){
 		StringBuilder stringBuilderForAdd = new StringBuilder();
 		int poly1Coef = 0;
@@ -104,7 +102,20 @@ class TwoPolyAddOrSub2{
 			}
 		}
 
-		add = poly1Coef + poly2Coef;
+		add = poly1Coef + poly2Coef; // the result(two exp's coefficient are added.)
+
+		/**
+		 *  For exp
+		 *           1. exp > 0, should connect X^exp
+		 *           2. exp = 0, we don't connect X^exp
+		 *           3. exp < 0, should connect X^(exp)
+		 *
+		 *  For coefficient
+		 *	         1. coefficient > 0, should connect +coefficient
+		 *           2. coefficient = 0, we don't connect this result
+		 *           3. coefficient < 0, should connect coefficient
+		 *
+		 */
 
 		if(exp > 0){
 			if (add !=0){
@@ -140,34 +151,17 @@ class TwoPolyAddOrSub2{
 
 			}
 		}
-		return stringBuilderForAdd;
 
+		return stringBuilderForAdd;
 	}
 
+	// According to the argument, the method can connect the result(two exp's coefficient are substruced.) and the exp
+	// Returning a string to caller.
 	static StringBuilder polySub(int[] poly1, int[] poly2, int exp){
-		/*
-		int poly1Coef = 0;
-		int poly2Coef = 0;
-
-		for(int i = 1; i < poly1.length; i = i + 2){
-			if (poly1[i] == exp){
-				poly1Coef = poly1[i - 1];
-				break;
-			}
-		}
-
-		for(int i = 1; i < poly2.length; i = i + 2){
-			if (poly2[i] == exp){
-				poly2Coef = poly2[i - 1];
-				break;
-			}
-		}
-
-		return poly1Coef - poly2Coef;*/
 		StringBuilder stringBuilderForAdd = new StringBuilder();
 		int poly1Coef = 0;
 		int poly2Coef = 0;
-		int add = 0;
+		int sub = 0;
 		for(int i = 1; i < poly1.length; i = i + 2){
 			if (poly1[i] == exp){
 				poly1Coef = poly1[i - 1];
@@ -182,50 +176,44 @@ class TwoPolyAddOrSub2{
 			}
 		}
 
-		add = poly1Coef - poly2Coef;
+		sub = poly1Coef - poly2Coef; // the result(two exp's coefficient are substruced.)
 
 		if(exp > 0){
-			if (add !=0){
-				if (add > 0){
-					stringBuilderForAdd.append("+" + add + "X^" + exp);
+			if (sub !=0){
+				if (sub > 0){
+					stringBuilderForAdd.append("+" + sub + "X^" + exp);
 				}else{
-					stringBuilderForAdd.append(add + "X^" + exp);
+					stringBuilderForAdd.append(sub + "X^" + exp);
 				}
 				
 			}else{
 
 			}
 		}else if(exp < 0){
-			if (add !=0){
-				if (add > 0){
-					stringBuilderForAdd.append("+" + add + "X^" + "(" + exp + ")");
+			if (sub !=0){
+				if (sub > 0){
+					stringBuilderForAdd.append("+" + sub + "X^" + "(" + exp + ")");
 				}else{
-					stringBuilderForAdd.append(add + "X^" + "(" + exp + ")");
+					stringBuilderForAdd.append(sub + "X^" + "(" + exp + ")");
 				}
 				
 			}else{
 
 			}
 		}else{
-			if (add !=0){
-				if (add > 0){
-					stringBuilderForAdd.append("+" + add );
+			if (sub !=0){
+				if (sub > 0){
+					stringBuilderForAdd.append("+" + sub );
 				}else{
-					stringBuilderForAdd.append(add + "X^");
+					stringBuilderForAdd.append(sub + "X^");
 				}
 				
 			}else{
 
 			}
 		}
+
 		return stringBuilderForAdd;
-
-	}
-
-	
-
-	public static void setTimes(int newTimes){
-		times = newTimes;
 	}
 
 	static StringBuilder polyAddByStep(int[] poly1, int[] poly2, int exp, int step){
@@ -299,17 +287,22 @@ class TwoPolyAddOrSub2{
 }
 
 public class TestPoly extends JFrame{
+	private Thread thread1;
 	private static JPanel contentPane;
 	private static JTextField textField;
 	private static JTextField textField_1;
-	private static JTextField txtnn;
 	private static JTextField textField_2;
-	JButton btnNewButton = new JButton("\u4E8C\u5F0F\u76F8\u52A0");
-	JButton btnNewButton_1 = new JButton("\u4E8C\u5F0F\u76F8\u6E1B");
+	private static JTextArea textArea;
+	JButton btnNewButton = new JButton("\u5169\u5F0F\u76F8\u52A0");
+	JButton btnNewButton_1 = new JButton("\u5169\u5F0F\u76F8\u6E1B");
 	JButton btnNewButton_2 = new JButton("\u5168\u90E8\u6E05\u9664");
-	JButton btnNewButton_3 = new JButton("\u6B65\u9A5F");
-	private Thread thread1;
+	JButton btnNewButton_3 = new JButton("\u986F\u793A\u6B65\u9A5F");
+	private static int choice = 0;
 
+
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -321,25 +314,15 @@ public class TestPoly extends JFrame{
 				}
 			}
 		});
-		TwoPolyAddOrSub2 poly = new TwoPolyAddOrSub2("1,4,2,3,3,2,1,0,4,-1","2,3,1,2,5,0,4,-1");
-		int[] poly1 = poly.Poly1StringToInt();
-		int[] poly2 = poly.Poly2StringToInt();
+	}
 
-		int biggestExp = poly.findBiggestExp(poly1, poly2);
-		int smallestExp = poly.findSmallestExp(poly1, poly2);
-
-		TestPoly myApp = new TestPoly(poly1, poly2, biggestExp, smallestExp);
-
-		
-		
-		
-	}// end main
-
-
-	TestPoly(){
-		setTitle("\u5169\u500B\u6709\u7406\u4FC2\u6578\u591A\u9805\u5F0F\u7684\u52A0\u6CD5\u6E1B\u6CD5\u7A0B\u5F0F");
+	/**
+	 * Create the frame, add the component, and set the word on label and button.
+	 */
+	TestPoly() {
+		setTitle("\u5169\u500B\u6709\u7406\u4FC2\u6578\u591A\u9805\u5F0F\u76F8\u52A0\u76F8\u6E1B\u7A0B\u5F0F");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 710);
+		setBounds(100, 100, 450, 798);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -349,133 +332,143 @@ public class TestPoly extends JFrame{
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("\u9019\u662F\u3127\u500B\u53EF\u4EE5\u8A08\u7B972\u500B\u6709\u7406\u4FC2\u6578\u591A\u9805\u5F0F\u7684\u7A0B\u5F0F\r\n");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(0, 0, 432, 22);
+		textArea = new JTextArea();
+		textArea.setBounds(0, 197, 432, 539);
+		panel.add(textArea);
+		
+		JLabel lblNewLabel = new JLabel("\u9019\u662F\u3127\u500B\u8A08\u7B972\u500B\u6709\u7406\u4FC2\u6578\u591A\u9805\u5F0F\u7684\u7A0B\u5F0F");
+		lblNewLabel.setBounds(0, 10, 432, 15);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("\u60A8\u53EF\u4EE5\u5728\u4E0B\u65B9\u7684\u7A7A\u683C\u4E2D\u8F38\u5165\u4F60\u60F3\u8A08\u7B97\u7684\u591A\u9805\u5F0F");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(0, 21, 432, 22);
+		JLabel lblNewLabel_1 = new JLabel("\u60A8\u9700\u8981\u5728\u4EE5\u4E0B\u76842\u500B\u6846\u5167\u8F38\u5165\u6709\u7406\u4FC2\u6578\u591A\u9805\u5F0F");
+		lblNewLabel_1.setBounds(0, 35, 432, 15);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("\u8209\u4F8B\uFF1A2X^4+5X+7X^(-1)   (\u60A8\u8981\u5728\u7A7A\u683C\u4E2D\u5165\u6210  2,4,5,1,7,-1)");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(0, 42, 432, 15);
+		JLabel lblNewLabel_2 = new JLabel("\u8F38\u5165\u7BC4\u4F8B\uFF1A2X^3 + 7 + (-1)X^(-4)  \u60A8\u8981\u8F38\u5165\u6210  2,3,7,0,-1,-4");
+		lblNewLabel_2.setBounds(0, 60, 432, 15);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("\u591A\u9805\u5F0FA\uFF1A");
-		lblNewLabel_3.setBounds(0, 67, 66, 15);
+		lblNewLabel_3.setBounds(0, 85, 63, 15);
 		panel.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("\u591A\u9805\u5F0FB\uFF1A");
-		lblNewLabel_4.setBounds(0, 92, 66, 15);
+		lblNewLabel_4.setBounds(0, 110, 63, 15);
 		panel.add(lblNewLabel_4);
 		
 		textField = new JTextField();
-		textField.setBounds(62, 64, 370, 21);
+		textField.setBounds(61, 82, 371, 21);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(62, 89, 370, 21);
+		textField_1.setBounds(61, 107, 371, 21);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 		
-		
-		btnNewButton.setBounds(32, 154, 87, 23);
-		panel.add(btnNewButton);
-		
-		
-		btnNewButton_1.setBounds(129, 154, 87, 23);
-		panel.add(btnNewButton_1);
-		
-		
-		btnNewButton_2.setBounds(226, 154, 87, 23);
-		panel.add(btnNewButton_2);
-		
-		
-		btnNewButton_3.setBounds(323, 154, 87, 23);
-		panel.add(btnNewButton_3);
-		
-		txtnn = new JTextField();
-		txtnn.setHorizontalAlignment(SwingConstants.CENTER);
-		txtnn.setEditable(true);
-		txtnn.setText("");
-		txtnn.setBounds(0, 194, 432, 472);
-		panel.add(txtnn);
-		txtnn.setColumns(10);
+		JLabel lblNewLabel_5 = new JLabel("\u7D50\u679C\uFF1A");
+		lblNewLabel_5.setBounds(0, 136, 48, 15);
+		panel.add(lblNewLabel_5);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(62, 117, 370, 21);
+		textField_2.setBounds(61, 133, 371, 21);
 		textField_2.setEditable(false);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
 		
-		JLabel lblNewLabel_5 = new JLabel("\u7D50\u679C\uFF1A");
-		lblNewLabel_5.setBounds(0, 117, 36, 22);
-		panel.add(lblNewLabel_5);
+		
+		btnNewButton.setBounds(28, 164, 87, 23);
+		panel.add(btnNewButton);
+		
+		
+		btnNewButton_1.setBounds(125, 164, 87, 23);
+		panel.add(btnNewButton_1);
+		
+		
+		btnNewButton_2.setBounds(222, 164, 87, 23);
+		panel.add(btnNewButton_2);
+		
+		
+		btnNewButton_3.setBounds(319, 164, 87, 23);
+		panel.add(btnNewButton_3);
 
 		btnNewButton.addActionListener(new ButtonListener()); // Register listener.
 		btnNewButton_1.addActionListener(new ButtonListener()); // Register listener.
 		btnNewButton_2.addActionListener(new ButtonListener()); // Register listener.
 		btnNewButton_3.addActionListener(new ButtonListener()); // Register listener.
-
-
 	}
 	
-	TestPoly(int [] poly1, int[] poly2, int biggestExp, int smallestExp){
-		thread1 = new Thread(new printPolyByStep(poly1, poly2, biggestExp, smallestExp));
-		thread1.start();
-	}
+	
 
 	private class ButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        	if(e.getSource() == btnNewButton){
-        		txtnn.setText("Addition");
-        		String polyA = textField.getText();
-        		String polyB = textField_1.getText();
-        		TwoPolyAddOrSub2 poly = new TwoPolyAddOrSub2(polyA,polyB);
+		String check = " ";
+		String polyA = " ";
+		String polyB = " ";
+	
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		if(e.getSource() == btnNewButton){
+        			// These action is two Polynomial's addition.    		
+        			setChoice(1); // Choice 1 is for addition.
+       		
+        			polyA = textField.getText();
+        			polyB = textField_1.getText();
+        			TwoPolyAddOrSub2 poly = new TwoPolyAddOrSub2(polyA,polyB);
 				int[] poly1 = poly.Poly1StringToInt();
 				int[] poly2 = poly.Poly2StringToInt();
-
 				int biggestExp = poly.findBiggestExp(poly1, poly2);
 				int smallestExp = poly.findSmallestExp(poly1, poly2);
-        		StringBuilder stringBuilder = new StringBuilder();
+
+        			StringBuilder stringBuilder = new StringBuilder();
 				for(int k = biggestExp; k >= smallestExp; k--){
 			 		stringBuilder.append(poly.polyAdd(poly1,poly2,k));
 				}
+
 				String polyForAdd = new String(stringBuilder); // Convert stringBuilder into String data type
-				textField_2.setText(polyForAdd);
-        	}else if(e.getSource() == btnNewButton_1){
-        		txtnn.setText("Sub");
-        		String polyA = textField.getText();
-        		String polyB = textField_1.getText();
-        		TwoPolyAddOrSub2 poly = new TwoPolyAddOrSub2(polyA,polyB);
+				textField_2.setText(polyForAdd);		        		
+        		}else if(e.getSource() == btnNewButton_1){
+        			// These action is two Polynomial's subtraction.       		
+        			setChoice(2); // Choice 2 is for subtraction.
+
+        			String polyA = textField.getText();
+        			String polyB = textField_1.getText();
+        			TwoPolyAddOrSub2 poly = new TwoPolyAddOrSub2(polyA,polyB);
 				int[] poly1 = poly.Poly1StringToInt();
 				int[] poly2 = poly.Poly2StringToInt();
-
 				int biggestExp = poly.findBiggestExp(poly1, poly2);
 				int smallestExp = poly.findSmallestExp(poly1, poly2);
-        		StringBuilder stringBuilder = new StringBuilder();
+
+        			StringBuilder stringBuilder = new StringBuilder();
 				for(int k = biggestExp; k >= smallestExp; k--){
 			 		stringBuilder.append(poly.polySub(poly1,poly2,k));
 				}
+
 				String polyForSub = new String(stringBuilder); // Convert stringBuilder into String data type
 				textField_2.setText(polyForSub);
-        	}else if(e.getSource() == btnNewButton_2){
-        		textField_2.setText("");
-        		txtnn.setText("Clear");
-        	}else if(e.getSource() == btnNewButton_3){
-        		
-        	}else{
-        		txtnn.setText("Wromg");
-        	}
+        		}else if(e.getSource() == btnNewButton_2){
+        		// Clear all string on the frame.
+        			textField_2.setText("");
+        			textArea.setText("");
+        			setChoice(0); // Choice 0 is for clear. 
+        		}else if(e.getSource() == btnNewButton_3){
+        			// These action can display the process of addition or subtraction step by step.
+        			String polyA = textField.getText();
+        			String polyB = textField_1.getText();
+        			TwoPolyAddOrSub2 poly = new TwoPolyAddOrSub2(polyA,polyB);
+				int[] poly1 = poly.Poly1StringToInt();
+				int[] poly2 = poly.Poly2StringToInt();
+				int biggestExp = poly.findBiggestExp(poly1, poly2);
+				int smallestExp = poly.findSmallestExp(poly1, poly2);
 
-        	
-        }
-    }
+				//      Create a thread to use the method (sleep) that we can set the time of interval,
+				//  and let the user can see the operation of two Polynomial's addition or subtraction step by step.
+				thread1 = new Thread(new printPolyByStep(poly1, poly2, biggestExp, smallestExp,choice));
+				thread1.start();
+        		}else{
+        			textArea.setText("Wromg"); // A check statement for ButtonListener.
+        		}     		
+        	}// end method actionPerformed
+    	} // end class ButtonListener
 
 	/**
 	 *   Class printPolyByStep is used to handle the process step by step. 
@@ -485,14 +478,15 @@ public class TestPoly extends JFrame{
 		private int[] poly2;
 		private int biggestExp;
 		private int smallestExp;
+		private int choice;
 
 		// set the variable's value.
-		printPolyByStep(int [] newpoly1, int[] newpoly2, int newbiggestExp, int newsmallestExp){
+		printPolyByStep(int [] newpoly1, int[] newpoly2, int newbiggestExp, int newsmallestExp, int newchoice){
 			poly1 = newpoly1;
 			poly2 = newpoly2;
 			biggestExp = newbiggestExp;
 			smallestExp = newsmallestExp;
-
+			choice = newchoice;
 		}
 
 		public void run() {
@@ -501,19 +495,49 @@ public class TestPoly extends JFrame{
 		  int times = biggestExp - smallestExp + 1;
 		  StringBuilder stringBuilder = new StringBuilder(); // a stringBuilder that we can connect the string(Because a String object is immutable.)
 		  String polyAdd = " ";
+		  String polySub = " ";
 
-          for( int i = 1 ; i <= times ; i++ ) {
-            stringBuilder.append(poly.polyAddByStep(poly1,poly2,exp,i));
-            exp = exp - 1; // Control the exp's value.
-            polyAdd = new String(stringBuilder); // Convert stringBuilder into String data type
-			System.out.print(polyAdd);
-            try {
-              //Thread.currentThread().sleep(2000); // Pause two seconds (currentThread------> thread1)
-            	thread1.sleep(2000);
-            } catch(InterruptedException ie) {
-              ie.printStackTrace(); //  prints the Exception and the call stack (stack trace) to Standard Error output. 
-            }
-          } // for
-        } // run
+		  int peopleChoice = getChoice();
+
+		  if(peopleChoice == 1){
+		  	for( int i = 1 ; i <= times ; i++ ) {
+            			stringBuilder.append(poly.polyAddByStep(poly1,poly2,exp,i));
+            			exp = exp - 1; // Control the exp's value.
+            			polyAdd = new String(stringBuilder); // Convert stringBuilder into String data type
+				textArea.setText(polyAdd);
+            			try {
+              				//Thread.currentThread().sleep(2000); // Pause two seconds (currentThread------> thread1, 2000ms = 2s)
+            				thread1.sleep(2000);
+            			} catch(InterruptedException ie) {
+              				ie.printStackTrace(); //  prints the Exception and the call stack (stack trace) to Standard Error output. 
+            			}
+            			} // for
+		  	} else if(peopleChoice == 2){
+		  	for( int i = 1 ; i <= times ; i++ ) {
+            			stringBuilder.append(poly.polySubByStep(poly1,poly2,exp,i));
+            			exp = exp - 1; // Control the exp's value.
+            			polySub = new String(stringBuilder); // Convert stringBuilder into String data type
+				textArea.setText(polySub);
+            			try {
+              				//Thread.currentThread().sleep(2000); // Pause two seconds (currentThread------> thread1, 2000ms = 2s)
+            				thread1.sleep(2000);
+            			} catch(InterruptedException ie) {
+              				ie.printStackTrace(); //  prints the Exception and the call stack (stack trace) to Standard Error output. 
+            			}
+            		} // for
+		  } else {
+		  	textArea.setText("You haven't clicked the button for addition or subtraction");
+		  }// end if    
+        	} // end method run
 	}// end class printPolyByStep
+
+	// A mutator can set the choice(1---> addition, 2---> subtraction, 0---> initialization)
+	public void setChoice(int newChoice){
+		choice = newChoice;
+	}
+
+	// A accessor can get the choice
+	public int getChoice(){
+		return choice;
+	}
 }// end class TestPoly
