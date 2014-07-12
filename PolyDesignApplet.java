@@ -1,3 +1,28 @@
+/**
+ * Name: Johnny
+ * ID: U10216014
+ * Data Structure summer vacation homework one.
+ * Information: 
+ *				The homework is "two polynomial addition or subtraction".
+ *			You should design a window(JApplet),put the input box let
+ *			user input, set buttons for addition, subtraction, clear, and 
+ *			step, and when user click a button that you should display the 
+ *			result on the window.
+ *
+ *			Design:
+ *			1.class design:
+ *					--a class (TwoPolyAddOrSub2) is for handling polynomial.
+ *						(spit the string, find the biggest or smallest exp, connect the string of process)
+ *					--a class (PolyDesignApplet) is for display window(JApplet).
+ *						--a inner class (ButtonListener) is for action presentation.
+ *						--a inner class (printPolyByStep) is for thread control(addition or subtraction step by step).
+ *
+ *			2.store the polynomial
+ *					-- I use a single array to store the polynomial's coefficient and exp
+ *
+ *			3.about the step by step
+ *					-- I choose to use thread , and thread.sleep(2000) to control the interval.    
+ */
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,7 +33,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.*;
 
-
+// The class is distributed a work which show a window for user.
 public class PolyDesignApplet extends JApplet {
 	private Thread thread1;
 	private static JTextField textField;
@@ -21,13 +46,18 @@ public class PolyDesignApplet extends JApplet {
 	JButton btnNewButton_3 = new JButton("\u986F\u793A\u6B65\u9A5F");
 	private static int choice = 0;
 
+	// In order to run standalone as a standalone application, we add the main method.
 	public static void main(String[] args) {
+		// Create a frame.
 		JFrame frame = new JFrame("Two Polynomial's addition or subtraction");
 
+		// Create an instance of the applet.
 		PolyDesignApplet applet = new PolyDesignApplet();
 
+		// Add the applet to the frame.
 		frame.add(applet);
 
+		// Display the frame.
 		frame.setSize(452,753);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,8 +65,9 @@ public class PolyDesignApplet extends JApplet {
 
 	}
 	
+	// Owing to Applet life-cycle, the method will automatically be invoked.
 	public void init(){
-		resize(450,752);
+		resize(450,752); // Set the applet size, or the window is too small initially.
 	}
 
 	/**
@@ -44,7 +75,7 @@ public class PolyDesignApplet extends JApplet {
 	 */
 	public PolyDesignApplet() {
 		
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(); // A panel is created, and we can put the component on it.
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
@@ -114,6 +145,7 @@ public class PolyDesignApplet extends JApplet {
 
 	}
 
+	// A class is responsible for action presentation.
 	private class ButtonListener implements ActionListener {
 		String check = " ";
 		String polyA = " ";
@@ -139,7 +171,8 @@ public class PolyDesignApplet extends JApplet {
 				}
 
 				String polyForAdd = new String(stringBuilder); // Convert stringBuilder into String data type
-				textField_2.setText(polyForAdd);		        		
+				textField_2.setText(polyForAdd);
+				textArea.setText("You choose the addition button, and you can click the step button.");		        		
 			}else if(e.getSource() == btnNewButton_1){
 				// These action is two Polynomial's subtraction.       		
 				setChoice(2); // Choice 2 is for subtraction.
@@ -159,8 +192,11 @@ public class PolyDesignApplet extends JApplet {
 
 				String polyForSub = new String(stringBuilder); // Convert stringBuilder into String data type
 				textField_2.setText(polyForSub);
+				textArea.setText("You choose the subtraction button, and you can click the step button.");
 			}else if(e.getSource() == btnNewButton_2){
 				// Clear all string on the frame.
+				textField.setText("");
+				textField_1.setText("");
 				textField_2.setText("");
 				textArea.setText("");
 				setChoice(0); // Choice 0 is for clear. 
@@ -253,7 +289,7 @@ public class PolyDesignApplet extends JApplet {
 	public int getChoice(){
 		return choice;
 	}
-}
+} // end class PolyDesignApplet
 
 class TwoPolyAddOrSub2{
 	static String poly1;
@@ -269,6 +305,7 @@ class TwoPolyAddOrSub2{
 		this.poly2 = newpoly2;
 	}
 
+	// The method can convert string into integer(For Polynomial 1).
 	public static int[] Poly1StringToInt() {
 		String[] tokens = poly1.split(",");
 
@@ -280,6 +317,7 @@ class TwoPolyAddOrSub2{
 		return poly1IntArray;
 	}
 
+	// The method can convert string into integer(For Polynomial 2).
 	public static int[] Poly2StringToInt() {
 		String[] tokens = poly2.split(",");
 
@@ -291,7 +329,7 @@ class TwoPolyAddOrSub2{
 		return poly1IntArray;
 	}
 
-	// The method can get the biggest exp between two Polynomial.
+	// The method can get the biggest exp between two Polynomials.
 	static int findBiggestExp(int[] poly1, int[] poly2){
 		int biggestExp = 0;
 
@@ -310,7 +348,7 @@ class TwoPolyAddOrSub2{
 		return biggestExp;
 	}
 
-	// The method can get the smallest exp between two Polynomial.
+	// The method can get the smallest exp between two Polynomials.
 	static int findSmallestExp(int[] poly1, int[] poly2){
 		int smallestExp = 0;
 
