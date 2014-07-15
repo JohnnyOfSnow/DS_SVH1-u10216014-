@@ -403,18 +403,7 @@ class TwoPolyAddOrSub2{
 		 *
 		 */
 
-		if(exp > 0){
-			if (add !=0){
-				if (add > 0){
-					stringBuilderForAdd.append("+" + add + "X^" + exp);
-				}else{
-					stringBuilderForAdd.append(add + "X^" + exp);
-				}
-				
-			}else{
-
-			}
-		}else if(exp < 0){
+		if(exp < 0){
 			if (add !=0){
 				if (add > 0){
 					stringBuilderForAdd.append("+" + add + "X^" + "(" + exp + ")");
@@ -425,12 +414,37 @@ class TwoPolyAddOrSub2{
 			}else{
 
 			}
+			
+		}else if(exp == 1){
+			if (add !=0){
+				if (add > 0){
+					stringBuilderForAdd.append("+" + add + "X");
+				}else{
+					stringBuilderForAdd.append(add + "X");
+				}
+				
+			}else{
+
+			}
+
+		}else if(exp > 0){
+			if (add !=0){
+				if (add > 0){
+					stringBuilderForAdd.append("+" + add + "X^" + exp);
+				}else{
+					stringBuilderForAdd.append(add + "X^" + exp);
+				}
+				
+			}else{
+
+			}
+		
 		}else{
 			if (add !=0){
 				if (add > 0){
-					stringBuilderForAdd.append("+" + add );
+					stringBuilderForAdd.append("+" + add);
 				}else{
-					stringBuilderForAdd.append(add + "X^");
+					stringBuilderForAdd.append(add);
 				}
 				
 			}else{
@@ -464,18 +478,7 @@ class TwoPolyAddOrSub2{
 
 		sub = poly1Coef - poly2Coef; // the result(two exp's coefficient are substruced.)
 
-		if(exp > 0){
-			if (sub !=0){
-				if (sub > 0){
-					stringBuilderForAdd.append("+" + sub + "X^" + exp);
-				}else{
-					stringBuilderForAdd.append(sub + "X^" + exp);
-				}
-				
-			}else{
-
-			}
-		}else if(exp < 0){
+		if(exp < 0){
 			if (sub !=0){
 				if (sub > 0){
 					stringBuilderForAdd.append("+" + sub + "X^" + "(" + exp + ")");
@@ -486,12 +489,37 @@ class TwoPolyAddOrSub2{
 			}else{
 
 			}
+			
+		}else if(exp == 1){
+			if (sub !=0){
+				if (sub > 0){
+					stringBuilderForAdd.append("+" + sub + "X");
+				}else{
+					stringBuilderForAdd.append(sub + "X");
+				}
+				
+			}else{
+
+			}
+
+		}else if(exp > 0){
+			if (sub !=0){
+				if (sub > 0){
+					stringBuilderForAdd.append("+" + sub + "X^" + exp);
+				}else{
+					stringBuilderForAdd.append(sub + "X^" + exp);
+				}
+				
+			}else{
+
+			}
+			
 		}else{
 			if (sub !=0){
 				if (sub > 0){
 					stringBuilderForAdd.append("+" + sub );
 				}else{
-					stringBuilderForAdd.append(sub + "X^");
+					stringBuilderForAdd.append(sub);
 				}
 				
 			}else{
